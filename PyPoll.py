@@ -9,7 +9,6 @@
 #import dependencies 
 import os
 import csv
-import datetime as dt
 
 #reading path
 file_to_load = os.path.join("Resources/election_results.csv")
@@ -55,27 +54,42 @@ with open(file_to_load) as election_data:
         #increment votes for each candidate 
         candidate_votes[candidate_name]+=1
 
-#determine percentage 
-for candidate_name in candidate_votes:
-    votes = candidate_votes[candidate_name]
-    vote_percentage = float(votes) / float(total_votes) * 100
-    print (f" {candidate_name}: {vote_percentage:.1f}% ({votes:,})\n")
+# save results to our text file
+with open (file_to_save, "w") as txt_file:
+    election_results = (
+        f"\nElection Results\n"
+        f"-------------------------\n"
+        f"Total Votes: {total_votes:,}\n"
+        f"-------------------------\n"
+    )
+    print(election_results, end="")
+    #save the final vote count to text file
+    txt_file.write(election_results)
 
-    #determine win count and candidate
-    #determine if the votes is great than the winning count 
-    if (votes > winning_count) and (vote_percentage > winning_percentage):
-        # if true set win count to votes and win perc to vote perc
-        winning_count = votes
-        winning_percentage = vote_percentage
-        #set win cand
-        winning_candidate = candidate_name
-winning_summary = (
-    f"--------------------\n"
-    f"Winner: {winning_candidate}\n"
-    f"Winning Vote Count: {winning_count:,}\n"
-    f"Winning Percentage: {winning_percentage:.1f}%\n"
-    f"---------------------\n"
-)    
-print(winning_summary)
+    #determine percentage 
+    for candidate_name in candidate_votes:
+        votes = candidate_votes[candidate_name]
+        vote_percentage = float(votes) / float(total_votes) * 100
+        candidate_results = (f" {candidate_name}: {vote_percentage:.1f}% ({votes:,})\n")
+        print(candidate_results)
+        txt_file.write(candidate_results)
+
+        #determine win count and candidate
+        #determine if the votes is great than the winning count 
+        if (votes > winning_count) and (vote_percentage > winning_percentage):
+            # if true set win count to votes and win perc to vote perc
+            winning_count = votes
+            winning_percentage = vote_percentage
+            #set win cand
+            winning_candidate = candidate_name
+    winning_summary = (
+        f"-------------------------\n"
+        f"Winner: {winning_candidate}\n"
+        f"Winning Vote Count: {winning_count:,}\n"
+        f"Winning Percentage: {winning_percentage:.1f}%\n"
+        f"-------------------------\n"
+    )    
+    print(winning_summary)
+    txt_file.write(winning_summary)
 
 
