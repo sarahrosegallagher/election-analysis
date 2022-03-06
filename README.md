@@ -31,8 +31,11 @@ The analysis of the election shows that:
 
 ## Challenge Overview
 The secondary project was to return to the original data set to find three additional pieces of information pertaining to the counties where votes were cast.
+
     - Find the voter turnout for each county.
+    
     - Calculate the percentage of votes from each county out of the total count. 
+    
     - Find the county with the highest turnout. 
 
 ## Challenge Methods  
